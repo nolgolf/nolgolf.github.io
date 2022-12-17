@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 1800px;
+      height: 890px;
+      border: 50px solid black;
+      background-color: #039603;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    #ball {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      transition: all 1s;
+    }
+    #navbar {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        border: 2px solid #000000;
+        border-radius: 20px 5px;
+        width: 1500px;
+        text-align: center;
+        background-color: #4edf8f;
+      }
+      #navbar li { display: inline; }
+      #navbar a {
+        color: rgb(0, 0, 0);
+        padding: 10px 15px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        width: 200px;
+      }
+      #navbar a:hover {
+        border-radius: 20px 5px;
+        background-color: #e6ff5c;
+      }
+    
+  </style>
+</head>
+
+<body style="height:2000px">
+
+    <ul id="navbar">
+        <li><a href="https://nolgolf.github.io/">Главная</a></li>
+        <li><a href="https://nolgolf.github.io/Play.html">Игра</a></li>
+        <li><a href="https://krasav4ek863.github.io/">Товары моего друга</a></li>
+        <li><a href="#">Не работает!</a></li>
+        <li><a href="https://nolgolf.github.io/o_razrobochicah.html">о нас</a></li>
+      </ul>
+  <br>
+
+
+  <div id="field">
+      <br> <br> <br> <br> <br> <br> <br> <br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;! <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="droppable"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://ru.js.cx/clipart/ball.svg" id="ball"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="droppable">
+   </div>
+
+  <script>
+    field.onclick = function(event) {
+
+      // координаты поля относительно окна браузера
+      let fieldCoords = this.getBoundingClientRect();
+
+      // мяч имеет абсолютное позиционирование (position:absolute), поле - относительное (position:relative)
+      // таким образом, координаты мяча рассчитываются относительно внутреннего, верхнего левого угла поля
+      let ballCoords = {
+        top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
+        left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
+      };
+
+      // запрещаем пересекать верхнюю границу поля
+      if (ballCoords.top < 0) ballCoords.top = 0;
+
+      // запрещаем пересекать левую границу поля
+      if (ballCoords.left < 0) ballCoords.left = 0;
+
+
+      // // запрещаем пересекать правую границу поля
+      if (ballCoords.left + ball.clientWidth > field.clientWidth) {
+        ballCoords.left = field.clientWidth - ball.clientWidth;
+      }
+
+      // запрещаем пересекать нижнюю границу поля
+      if (ballCoords.top + ball.clientHeight > field.clientHeight) {
+        ballCoords.top = field.clientHeight - ball.clientHeight;
+      }
+
+      ball.style.left = ballCoords.left + 'px';
+      ball.style.top = ballCoords.top + 'px';
+    }
+
+
+
+
+
+
+
+
+
+ 
+
+    function enterDroppable(elem) {
+      elem.style.background = 'red';
+    }
+
+    function leaveDroppable(elem) {
+      elem.style.background = '';
+    }
+
+    ball.ondragstart = function() {
+      return false;
+    };
+  </script>
+
+</body>
+</html>
